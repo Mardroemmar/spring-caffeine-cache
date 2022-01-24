@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  dev.mardroemmar.springcaffeine.CaffeineCacheConfiguration,\
+  dev.mardroemmar.springcaffeine.CaffeineCacheManager

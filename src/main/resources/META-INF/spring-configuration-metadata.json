@@ -1,0 +1,33 @@
+{
+  "groups": [
+    {
+      "name": "cache.caffeine",
+      "description": "Configuration for the Caffeine caching."
+    }
+  ],
+  "properties": [
+    {
+      "name": "cache.caffeine.enabled",
+      "type": "java.lang.Boolean",
+      "defaultValue": "true",
+      "description": "Should the Caffeine cache manager be used?"
+    },
+    {
+      "name": "cache.caffeine.default-cache-name",
+      "type": "java.lang.String",
+      "defaultValue": "default",
+      "description": "The name of the default cache base. If it is not defined, an eternal, unbounded default will be used instead."
+    },
+    {
+      "name": "cache.caffeine.can-create-default-caches",
+      "type": "java.lang.Boolean",
+      "defaultValue": "false",
+      "description": "Can caches be created with default settings if they are unconfigured beforehand?"
+    },
+    {
+      "name": "cache.caffeine.caches",
+      "type": "java.util.List<dev.mardroemmar.springcaffeine.model.CacheDefinition>",
+      "description": "The caches to be created and configured."
+    }
+  ]
+}

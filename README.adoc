@@ -1,0 +1,159 @@
+= spring-caffeine-cache
+Mariell Hoversholm <mariell@mardroemmar.dev>
+v1.0, 2022-01-24
+:current-version: 1.0.0
+
+A library for using link:https://github.com/ben-manes/caffeine[Caffeine] with link:https://docs.spring.io/spring-boot/docs/2.6.1/reference/html/io.html#io.caching[Spring caching].
+
+== Usage
+
+=== Repository
+
+To depend on a release, you need only depend on the official Maven central, or a mirror thereof.
+If you're using Maven, this is automatic.
+Gradle users must:
+
+.build.gradle.kts
+[source,kotlin]
+----
+repositories {
+    mavenCentral()
+}
+----
+
+To depend on a `SNAPSHOT` version, you need to depend on the Sonatype snapshot repository:
+
+.pom.xml
+[source,xml]
+----
+<repositories>
+  <repository>
+    <id>sonatype-oss-snapshot</id>
+    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+    <releases>
+      <enabled>false</enabled>
+    </releases>
+    <snapshots>
+      <enabled>true</enabled>
+    </snapshots>
+  </repository>
+</repositories>
+----
+
+.build.gradle.kts
+[source,kotlin]
+----
+repositories {
+    maven("https://oss.sonatype.org/content/repositories/snapshots")
+}
+----
+
+=== Artifact
+
+The dependency may be declared as follows:
+
+.pom.xml
+[source,xml,subs="+attributes"]
+----
+<dependencies>
+  <dependency>
+    <groupId>dev.mardroemmar</groupId>
+    <artifactId>spring-caffeine-cache</artifactId>
+    <version>{current-version}</version>
+  </dependency>
+</dependencies>
+----
+
+.build.gradle.kts
+[source,kotlin,subs="+attributes"]
+----
+dependencies {
+    implementation("dev.mardroemmar:spring-caffeine-cache:{current-version}")
+    // or `api`, `testImplementation`, `compile` (deprecated), `shadow`, etc.
+}
+----
+
+=== Java
+
+This project currently requires Java 11. The project has a policy of supporting at least the 2 newest long-term-support (LTS) versions of Java: any older versions are always subject to be removed in a MAJOR version bump.
+This means that e.g. version `1.0.0` with Java 11 will never drop Java 11, but rather bump to `2.0.0` first.
+
+== Configuration
+
+The following configuration properties are available:
+
+[source,yaml]
+----
+cache.caffeine:
+  # The name to use as the implicit base cache.
+  # Type: non-null String
+  # Default: 'default'
+  default-cache-name: default
+  # Whether it is legal to define new caches at runtime without erring.
+  # Type: non-null Boolean
+  # Default: false
+  can-create-default-caches: false
+  # The cache definitions to use.
+  # Type: non-null list of CacheDefinition
+  # Default: []
+  caches:
+    - # Each cache must have a name. This is the value of @Cacheable and the other cache annotations.
+      # Type: non-null string
+      # Default: null (i.e. will err by default)
+      name: example
+      # The capacity to start the cache off with. Keep this to a sensible value for your use-case.
+      # -1 defines no initial capacity, 0 defines a zero-size cache by default.
+      # Type: nullable Integer
+      # Default: null
+      initial-capacity: 128
+      # The maximum capacity of the cache. Keep this to a sensible value for your use-case.
+      # -1 defines no max size, 0 defines an empty cache (i.e. all values are instantly evicted).
+      # Must be smaller than initial-capacity.
+      # Mutually exclusive with maximum-weight. If either is inherited, unset the other or risk facing errors.
+      # Type: nullable Long
+      # Default: null
+      maximum-size: 128
+      # The maximum weight of the cache. Keep this to a sensible value for your use-case.
+      # -1 defines no max weight, 0 defines an empty cache (i.e. all values are instantly evicted).
+      # Mutually exclusive with maximum-size. If either is inherited, unset the other or risk facing errors.
+      # Must also set `weigher`.
+      # Type: nullable Long
+      # Default: null
+      maximum-weight: 128
+      # The duration since last accessing a value after which to expire the entry.
+      # -1 defines no duration, 0 defines a cache that instantly expires all entries.
+      # Type: nullable Duration
+      # Default: null
+      expire-after-access: PT15M2.123S
+      # The duration since last writing a value after which to expire the entry.
+      # -1 defines no duration, 0 defines a cache that instantly expires all entries.
+      # Type: nullable Duration
+      # Default: null
+      expire-after-write: PT15M2.123S
+      # Whether to use WeakReferences for the keys.
+      # Note that this changes key behaviour to use REFERENTIAL equality!
+      # Type: nullable Boolean
+      # Default: null
+      weak-keys: false
+      # Whether to use WeakReferences for the values.
+      # Mutually exclusive with soft-values. If either is inherited, unset the other or risk facing errors.
+      # Type: nullable Boolean
+      # Default: null
+      weak-values: false
+      # Whether to use SoftReferences for the values.
+      # Mutually exclusive with weak-values. If either is inherited, unset the other or risk facing errors.
+      # Type: nullable Boolean
+      # Default: null
+      soft-values: false
+      # The class name of the bean to use as the Weigher.
+      # Required if `maximum-weight` is set. Requires `maximum-weight` to be set.
+      # Type: nullable String
+      # Default: null
+      weigher: dev.mardroemmar.coolservice.WeigherImpl
+----
+
+== Licence
+
+This project is licensed under the link:https://choosealicense.com/licenses/mpl-2.0/[Mozilla Public Licence 2.0].
+Because of this, the project is freely distributable and usable, both by proprietary and free (as in libre) software.
+You need not ask for permission to use the project in any way; all usages are welcome within the terms of the licence.
