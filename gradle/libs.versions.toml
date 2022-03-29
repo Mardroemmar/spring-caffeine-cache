@@ -1,7 +1,7 @@
 [versions]
 gradle-plugin-indra = "2.0.6"
 gradle-plugin-testlog = "3.1.0"
-gradle-plugin-spring-boot = "2.6.1"
+gradle-plugin-spring-boot = "2.6.5"
 gradle-plugin-spring-depman = "1.0.11.RELEASE"
 
 kotlin = "1.6.10"
