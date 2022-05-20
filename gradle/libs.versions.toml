@@ -5,7 +5,7 @@ gradle-plugin-spring-boot = "2.6.5"
 gradle-plugin-spring-depman = "1.0.11.RELEASE"
 
 kotlin = "1.6.10"
-kotlin-logging = "2.1.21"
+kotlin-logging = "2.1.23"
 apiguardian = "1.1.2"
 junit = "5.8.2"
 truth = "1.1.3"
